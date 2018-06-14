@@ -1,0 +1,21 @@
+---
+# tasks file for empty.example
+
+- name: Adding admin users
+  user:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ admins }}"
+
+- name: Adding Backup users
+  user:
+    name: "{{ item }}"
+    state: present
+    group: root
+  with_items: "{{ backups }}"
+
+- name: Removing HR users
+  user:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ hr }}"

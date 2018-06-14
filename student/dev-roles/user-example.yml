@@ -1,0 +1,25 @@
+- hosts: webservers
+  become: true
+#  vars_files: /home/student/dev-roles/vars.yml
+  tasks:
+    - name: Including var file
+      include_vars: vars.yml
+
+    - name: Adding Admins
+      user:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ admins }}"
+
+    - name: Adding backups
+      user:
+        name: "{{ item }}"
+        state: present
+        group: root
+      with_items: "{{ backups }}"
+
+    - name: removing hr
+      user:
+        name: "{{ item }}"
+        state: absent
+      with_items: "{{ hr }}"

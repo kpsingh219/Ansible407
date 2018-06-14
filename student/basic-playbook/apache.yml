@@ -1,0 +1,30 @@
+- name: Install apache and run the webservice
+  hosts: web
+  tasks:
+    - name: Installing WebServer
+      yum:
+        name: httpd
+        state: present
+    - name: Correct Index.html file
+      copy:
+        content: "this is my first website"
+        dest: /var/www/html/index.html
+
+    - name: Starting web service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: open firewall for apache
+      firewalld:
+        service: http
+        state: enabled
+        immediate: yes
+        permanent: true
+
+    - name: Check WebPage status
+      uri:
+        url: http://servera.lab.example.com
+        status_code: 200
+  

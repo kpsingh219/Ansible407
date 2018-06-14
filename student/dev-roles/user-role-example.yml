@@ -1,0 +1,6 @@
+- become: true 
+  hosts: webservers
+
+  roles:
+    - empty.example
+  

@@ -1,0 +1,37 @@
+- name: testing the error handling
+  hosts: databases
+  vars: 
+    pkg_name: 
+      - httpd
+      - google.com
+  tasks:
+    - name: Install package {{ pkg_name }}
+      yum:
+        name: "{{ pkg_name }}"
+        state: latest
+      #with_items: "{{ pkg_name }}"
+      register: yum_result
+      ignore_errors: yes
+
+    - name: Print if failed
+      debug:
+#        msg: "Installation Failed"
+        var: yum_result 
+      #when: yum_result.rc != 0
+
+    - name: Start the service
+      service:
+        name: "{{ items }}"
+        state: started
+        enabled: true
+      with_items: "{{ pkg_name }}"
+      ignore_errors: yes
+      register: ser_result
+
+    - name: Print if service start fails
+      debug:
+        msg: "Service start failed"
+
+      when: ser_result != 0
+
+    #- name: 

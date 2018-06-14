@@ -1,0 +1,13 @@
+---
+# vars file for empty.example
+admins:
+  - john
+  - mary
+
+backups:
+  - gulshan
+  - amit
+
+hr:
+  - kp
+  - gurgaon
